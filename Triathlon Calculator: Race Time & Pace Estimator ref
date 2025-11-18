@@ -1,0 +1,1898 @@
+<style>
+        .tc-calculator-wrapper * {
+            margin: 0 !important;
+            padding: 0 !important;
+            box-sizing: border-box !important;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+
+        .tc-calculator-wrapper {
+            --primary-blue: #1E40AF !important;
+            --secondary-blue: #2563EB !important;
+            --accent-blue: #3B82F6 !important;
+            --light-blue: #EBF8FF !important;
+            --bg-gradient: linear-gradient(135deg, #F8FAFC, #F1F5F9) !important;
+            --text-primary: #0F172A !important;
+            --text-secondary: #334155 !important;
+            --text-muted: #64748B !important;
+            --border-color: #E2E8F0 !important;
+            --card-bg: #FFFFFF !important;
+            --success-color: #059669 !important;
+            --warning-color: #D97706 !important;
+            --error-color: #DC2626 !important;
+
+            background: var(--bg-gradient) !important;
+            color: var(--text-primary) !important;
+            line-height: 1.5 !important;
+            padding: 15px !important;
+            min-height: 100vh !important;
+            font-size: 16px !important;
+        }
+
+        .tc-main-container {
+            max-width: 1200px !important;
+            margin: 0 auto !important;
+            background: var(--card-bg) !important;
+            border-radius: 20px !important;
+            box-shadow: 0 25px 50px -12px rgba(30, 64, 175, 0.15) !important;
+            border: 1px solid var(--border-color) !important;
+            overflow: hidden !important;
+            position: relative !important;
+        }
+
+        .tc-main-container::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            height: 6px !important;
+            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue), var(--accent-blue)) !important;
+        }
+
+        .tc-header-section {
+            text-align: center !important;
+            padding: 25px 20px !important;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue)) !important;
+            color: white !important;
+            position: relative !important;
+        }
+
+        .tc-header-section::after {
+            content: '' !important;
+            position: absolute !important;
+            bottom: -1px !important;
+            left: 0 !important;
+            right: 0 !important;
+            height: 15px !important;
+            background: var(--card-bg) !important;
+            border-radius: 15px 15px 0 0 !important;
+        }
+
+        .tc-main-title {
+            font-size: 32px !important;
+            font-weight: 800 !important;
+            margin-bottom: 8px !important;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        .tc-subtitle {
+            font-size: 16px !important;
+            opacity: 0.9 !important;
+            max-width: 600px !important;
+            margin: 0 auto !important;
+        }
+
+        .tc-warning-box {
+            background: #EBF8FF !important;
+            border: 2px solid var(--accent-blue) !important;
+            border-radius: 12px !important;
+            padding: 16px 20px !important;
+            margin: 20px 0 !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            color: var(--primary-blue) !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+
+        .tc-calculator-form {
+            padding: 25px 20px !important;
+            background: var(--card-bg) !important;
+        }
+
+        .tc-form-grid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+            gap: 18px !important;
+            margin-bottom: 20px !important;
+        }
+
+        .tc-input-group {
+            background: linear-gradient(145deg, #FFFFFF, #F8FAFC) !important;
+            padding: 18px !important;
+            border-radius: 12px !important;
+            border: 2px solid var(--border-color) !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            position: relative !important;
+        }
+
+        .tc-input-group:hover {
+            border-color: var(--accent-blue) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 10px 25px rgba(30, 64, 175, 0.1) !important;
+        }
+
+        .tc-input-label {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            font-weight: 700 !important;
+            color: var(--text-primary) !important;
+            font-size: 16px !important;
+            margin-bottom: 12px !important;
+        }
+
+        .tc-input-icon {
+            font-size: 20px !important;
+            padding: 8px !important;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue)) !important;
+            border-radius: 10px !important;
+            color: white !important;
+            min-width: 36px !important;
+            text-align: center !important;
+        }
+
+        .tc-input-field {
+            width: 100% !important;
+            padding: 16px 20px !important;
+            font-size: 16px !important;
+            font-weight: 500 !important;
+            border: 2px solid var(--border-color) !important;
+            border-radius: 12px !important;
+            background: var(--card-bg) !important;
+            color: var(--text-primary) !important;
+            transition: all 0.3s ease !important;
+            outline: none !important;
+        }
+
+        /* Separate rule for select fields to avoid conflicts */
+        .tc-select-field {
+            width: 100% !important;
+            padding: 16px 20px !important;
+            font-size: 16px !important;
+            font-weight: 500 !important;
+            border: 2px solid #E2E8F0 !important;
+            border-radius: 12px !important;
+            background: #FFFFFF !important;
+            color: #0F172A !important;
+            -webkit-appearance: menulist !important;
+            -moz-appearance: menulist !important;
+            appearance: menulist !important;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F172A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 12px center !important;
+            background-size: 16px !important;
+            padding-right: 40px !important;
+            text-rendering: optimizeLegibility !important;
+            -webkit-text-fill-color: #0F172A !important;
+            -webkit-text-stroke: none !important;
+            transition: all 0.3s ease !important;
+            outline: none !important;
+        }
+
+        .tc-input-field:focus, .tc-select-field:focus {
+            border-color: var(--primary-blue) !important;
+            box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1) !important;
+            transform: translateY(-1px) !important;
+        }
+
+        /* Additional select field enhancements */
+        .tc-select-field:hover {
+            border-color: #2563EB !important;
+        }
+
+        .tc-select-field:focus {
+            border-color: #1E40AF !important;
+            box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1) !important;
+            outline: none !important;
+        }
+
+        /* Ensure text is always visible */
+        .tc-select-field {
+            -webkit-user-select: text !important;
+            -moz-user-select: text !important;
+            user-select: text !important;
+        }
+
+        .tc-help-text {
+            color: var(--text-muted) !important;
+            font-size: 14px !important;
+            margin-top: 8px !important;
+            line-height: 1.5 !important;
+        }
+
+        .tc-calculate-btn {
+            width: 100% !important;
+            padding: 20px 40px !important;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue)) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 16px !important;
+            font-size: 18px !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 12px !important;
+            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.3) !important;
+        }
+
+        .tc-calculate-btn:hover {
+            transform: translateY(-3px) !important;
+            box-shadow: 0 12px 35px rgba(30, 64, 175, 0.4) !important;
+        }
+
+        .tc-results-container {
+            margin-top: 30px !important;
+            opacity: 0 !important;
+            transform: translateY(20px) !important;
+            transition: all 0.5s ease !important;
+            max-height: 0 !important;
+            overflow: hidden !important;
+        }
+
+        .tc-results-container.show {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            max-height: 5000px !important;
+        }
+
+        .tc-results-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue)) !important;
+            color: white !important;
+            padding: 25px 30px !important;
+            border-radius: 16px 16px 0 0 !important;
+            text-align: center !important;
+        }
+
+        .tc-results-title {
+            font-size: 24px !important;
+            font-weight: 700 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 12px !important;
+        }
+
+        .tc-main-results {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            background: linear-gradient(145deg, #F8FAFC, var(--card-bg)) !important;
+            border-bottom: 1px solid var(--border-color) !important;
+        }
+
+        .tc-result-item {
+            padding: 30px !important;
+            text-align: center !important;
+            border-right: 1px solid var(--border-color) !important;
+        }
+
+        .tc-result-item:last-child {
+            border-right: none !important;
+        }
+
+        .tc-result-number {
+            font-size: 42px !important;
+            font-weight: 800 !important;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue)) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+            margin-bottom: 8px !important;
+            display: block !important;
+        }
+
+        .tc-result-label {
+            color: var(--text-secondary) !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+        }
+
+        .tc-details-section {
+            background: var(--card-bg) !important;
+            padding: 25px 30px !important;
+            border-bottom: 1px solid var(--border-color) !important;
+        }
+
+        .tc-detail-row {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            padding: 12px 0 !important;
+            border-bottom: 1px solid #F1F5F9 !important;
+        }
+
+        .tc-detail-row:last-child {
+            border-bottom: none !important;
+        }
+
+        .tc-detail-label {
+            font-weight: 600 !important;
+            color: var(--text-primary) !important;
+        }
+
+        .tc-detail-value {
+            color: var(--text-secondary) !important;
+            font-weight: 500 !important;
+        }
+
+        .tc-info-box {
+            background: var(--light-blue) !important;
+            border: 1px solid var(--accent-blue) !important;
+            border-radius: 12px !important;
+            padding: 20px !important;
+            margin: 20px 0 !important;
+        }
+
+        .tc-info-title {
+            font-weight: 700 !important;
+            color: var(--primary-blue) !important;
+            margin-bottom: 10px !important;
+            font-size: 16px !important;
+        }
+
+        .tc-info-text {
+            color: var(--text-secondary) !important;
+            line-height: 1.6 !important;
+            font-size: 15px !important;
+        }
+
+        .tc-share-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+            border: 2px solid #cbd5e1 !important;
+            border-radius: 16px !important;
+            padding: 24px !important;
+            margin: 32px 0 !important;
+            text-align: center !important;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+        }
+
+        .tc-share-title {
+            font-size: 20px !important;
+            font-weight: 700 !important;
+            color: #1e293b !important;
+            margin-bottom: 20px !important;
+        }
+
+        .tc-share-subtitle {
+            font-size: 14px !important;
+            color: #64748b !important;
+            margin-bottom: 20px !important;
+        }
+
+        .tc-share-buttons {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+            gap: 12px !important;
+            max-width: 600px !important;
+            margin: 0 auto !important;
+        }
+
+        .tc-share-btn {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            padding: 12px 16px !important;
+            border: none !important;
+            border-radius: 10px !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            text-decoration: none !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            color: white !important;
+            min-height: 44px !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        }
+
+        .tc-share-btn:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2) !important;
+            filter: brightness(1.05) !important;
+        }
+
+        .tc-share-twitter {
+            background: linear-gradient(135deg, #1DA1F2 0%, #0d8bd9 100%) !important;
+        }
+
+        .tc-share-facebook {
+            background: linear-gradient(135deg, #4267B2 0%, #365899 100%) !important;
+        }
+
+        .tc-share-linkedin {
+            background: linear-gradient(135deg, #0077B5 0%, #005885 100%) !important;
+        }
+
+        .tc-share-whatsapp {
+            background: linear-gradient(135deg, #25D366 0%, #1ebe57 100%) !important;
+        }
+
+        .tc-share-copy {
+            background: linear-gradient(135deg, #6B73FF 0%, #9DA5FF 100%) !important;
+        }
+
+        .tc-share-copy.copied {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+            animation: pulse-green 0.3s ease-in-out !important;
+        }
+
+        .tc-share-copy.failed {
+            background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%) !important;
+            animation: shake 0.3s ease-in-out !important;
+        }
+
+        @keyframes pulse-green {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .tc-calculator-tabs {
+            display: flex !important;
+            margin-bottom: 20px !important;
+            border-bottom: 2px solid var(--border-color) !important;
+            background: white !important;
+            border-radius: 12px 12px 0 0 !important;
+            overflow: hidden !important;
+        }
+
+        .tc-tab-button {
+            flex: 1 !important;
+            padding: 16px 24px !important;
+            background: #F8FAFC !important;
+            border: none !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            color: var(--text-muted) !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            border-bottom: 3px solid transparent !important;
+        }
+
+        .tc-tab-button:hover {
+            background: #EFF6FF !important;
+            color: var(--primary-blue) !important;
+        }
+
+        .tc-tab-button.active {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue)) !important;
+            color: white !important;
+            font-weight: 700 !important;
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+            transform: translateY(-1px) !important;
+            border-radius: 12px !important;
+        }
+
+        .tc-tab-content {
+            display: none !important;
+        }
+
+        .tc-tab-content.active {
+            display: block !important;
+        }
+
+        @media (max-width: 768px) {
+            .tc-calculator-wrapper {
+                padding: 8px !important;
+            }
+
+            .tc-main-title {
+                font-size: 26px !important;
+            }
+
+            .tc-calculator-form {
+                padding: 18px 12px !important;
+            }
+
+            .tc-form-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+
+            .tc-input-group {
+                padding: 15px !important;
+            }
+
+            .tc-main-results {
+                grid-template-columns: 1fr !important;
+            }
+
+            .tc-result-item {
+                border-right: none !important;
+                border-bottom: 1px solid var(--border-color) !important;
+                padding: 25px !important;
+            }
+
+            .tc-result-item:last-child {
+                border-bottom: none !important;
+            }
+
+            .tc-calculator-tabs {
+                flex-wrap: wrap !important;
+                gap: 4px !important;
+                padding: 4px !important;
+            }
+
+            .tc-tab-button {
+                font-size: 12px !important;
+                padding: 10px 12px !important;
+                min-width: 0 !important;
+                flex: 1 1 auto !important;
+            }
+
+            .tc-share-buttons {
+                grid-template-columns: 1fr !important;
+                gap: 8px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tc-calculator-wrapper">
+        <div class="tc-main-container">
+            <div class="tc-header-section">
+                <h1 class="tc-main-title">🏊‍♂️🚴‍♂️🏃‍♂️ Triathlon Calculator</h1>
+                <p class="tc-subtitle">Calculate race times and analyze paces for swim, bike, and run disciplines</p>
+            </div>
+
+            <!-- Calculator Tabs -->
+            <div class="tc-calculator-tabs">
+                <button type="button" class="tc-tab-button active" data-tab="race-time">Race Time</button>
+                <button type="button" class="tc-tab-button" data-tab="pace-analysis">Pace Analysis</button>
+            </div>
+
+            <!-- Race Time Tab -->
+            <div id="race-time-tab" class="tc-tab-content active">
+                <form id="raceTimeForm" class="tc-calculator-form">
+                    <div class="tc-warning-box">
+                        ⚠️ <strong>Transition Times:</strong> Default T1 (swim-to-bike) is 2:30 and T2 (bike-to-run) is 1:30 minutes.
+                        Adjust these based on your experience level and race conditions.
+                    </div>
+
+                    <div class="tc-form-grid">
+                        <!-- Race Distance Selection -->
+                        <div class="tc-input-group">
+                            <label class="tc-input-label">
+                                <span class="tc-input-icon">🏁</span>
+                                Race Distance
+                            </label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                                <div>
+                                    <label for="raceDistanceType" style="display: block; font-size: 13px; font-weight: 600; color: #374151;">Distance Type</label>
+                                    <select id="raceDistanceType" class="tc-select-field" title="Select triathlon race distance type">
+                                        <option value="super_sprint">Super Sprint (400m/10km/2.5km)</option>
+                                        <option value="sprint">Sprint (750m/20km/5km)</option>
+                                        <option value="olympic" selected>Olympic (1500m/40km/10km)</option>
+                                        <option value="long_course">Long Course (2000m/50km/12km)</option>
+                                        <option value="half_ironman">Half Ironman (1900m/90km/21.1km)</option>
+                                        <option value="ironman">Ironman (3800m/180km/42.2km)</option>
+                                        <option value="double_ironman">Double Ironman (7600m/360km/84.4km)</option>
+                                        <option value="custom">Custom Distance</option>
+                                    </select>
+                                </div>
+                                <div id="customDistanceInputs" style="display: none;">
+                                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">Custom Distances</label>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;">
+                                        <input type="number" id="customSwim" class="tc-input-field" placeholder="Swim" min="0.1" step="0.1" style="height: 40px; padding: 8px 12px; font-size: 14px;">
+                                        <input type="number" id="customBike" class="tc-input-field" placeholder="Bike" min="1" step="1" style="height: 40px; padding: 8px 12px; font-size: 14px;">
+                                        <input type="number" id="customRun" class="tc-input-field" placeholder="Run" min="1" step="0.1" style="height: 40px; padding: 8px 12px; font-size: 14px;">
+                                    </div>
+                                    <div class="tc-help-text" style="margin-top: 4px;">Enter distances in kilometers</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Swim Section -->
+                        <div class="tc-input-group">
+                            <label class="tc-input-label">
+                                <span class="tc-input-icon">🏊‍♂️</span>
+                                Swim Discipline
+                            </label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                                <div>
+                                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">Distance</label>
+                                    <input type="number" id="swimDistance" class="tc-input-field" placeholder="1500" min="100" max="5000" step="50" style="height: 40px;">
+                                    <label for="swimDistanceUnit" style="display: block; margin-top: 8px; font-size: 13px; font-weight: 600; color: #374151;">Swim Distance Unit</label>
+                                    <select id="swimDistanceUnit" class="tc-select-field" title="Select swim distance unit">
+                                        <option value="meters">Meters</option>
+                                        <option value="yards">Yards</option>
+                                        <option value="kilometers">Kilometers</option>
+                                        <option value="miles">Miles</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">Time</label>
+                                    <input type="text" id="swimTime" class="tc-input-field" placeholder="00:25:00" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}" style="height: 40px;">
+                                    <div class="tc-help-text">Format: hh:mm:ss</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bike Section -->
+                        <div class="tc-input-group">
+                            <label class="tc-input-label">
+                                <span class="tc-input-icon">🚴‍♂️</span>
+                                Bike Discipline
+                            </label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                                <div>
+                                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">Distance</label>
+                                    <input type="number" id="bikeDistance" class="tc-input-field" placeholder="40" min="5" max="200" step="1" style="height: 40px;">
+                                    <label for="bikeDistanceUnit" style="display: block; margin-top: 8px; font-size: 13px; font-weight: 600; color: #374151;">Bike Distance Unit</label>
+                                    <select id="bikeDistanceUnit" class="tc-select-field" title="Select bike distance unit">
+                                        <option value="km">Kilometers</option>
+                                        <option value="miles">Miles</option>
+                                        <option value="meters">Meters</option>
+                                        <option value="yards">Yards</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">Time</label>
+                                    <input type="text" id="bikeTime" class="tc-input-field" placeholder="01:05:00" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}" style="height: 40px;">
+                                    <div class="tc-help-text">Format: hh:mm:ss</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Run Section -->
+                        <div class="tc-input-group">
+                            <label class="tc-input-label">
+                                <span class="tc-input-icon">🏃‍♂️</span>
+                                Run Discipline
+                            </label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                                <div>
+                                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">Distance</label>
+                                    <input type="number" id="runDistance" class="tc-input-field" placeholder="10" min="1" max="50" step="0.1" style="height: 40px;">
+                                    <label for="runDistanceUnit" style="display: block; margin-top: 8px; font-size: 13px; font-weight: 600; color: #374151;">Run Distance Unit</label>
+                                    <select id="runDistanceUnit" class="tc-select-field" title="Select run distance unit">
+                                        <option value="km">Kilometers</option>
+                                        <option value="miles">Miles</option>
+                                        <option value="meters">Meters</option>
+                                        <option value="yards">Yards</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">Time</label>
+                                    <input type="text" id="runTime" class="tc-input-field" placeholder="00:45:00" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}" style="height: 40px;">
+                                    <div class="tc-help-text">Format: hh:mm:ss</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Transitions -->
+                        <div class="tc-input-group">
+                            <label class="tc-input-label">
+                                <span class="tc-input-icon">🔄</span>
+                                Transitions
+                            </label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                                <div>
+                                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">T1 (Swim to Bike)</label>
+                                    <input type="text" id="transition1" class="tc-input-field" placeholder="00:02:30" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}" style="height: 40px;">
+                                    <div class="tc-help-text">Format: mm:ss</div>
+                                </div>
+                                <div>
+                                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">T2 (Bike to Run)</label>
+                                    <input type="text" id="transition2" class="tc-input-field" placeholder="00:01:30" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}" style="height: 40px;">
+                                    <div class="tc-help-text">Format: mm:ss</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="tc-calculate-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polygon points="10,8 16,12 10,16 10,8"/>
+                        </svg>
+                        Calculate Race Time
+                    </button>
+                </form>
+            </div>
+
+            <!-- Pace Analysis Tab -->
+            <div id="pace-analysis-tab" class="tc-tab-content">
+                <form id="paceAnalysisForm" class="tc-calculator-form">
+                    <div class="tc-form-grid">
+                        <div class="tc-input-group">
+                            <label class="tc-input-label">
+                                <span class="tc-input-icon">🏊‍♂️</span>
+                                Swim Pace Analysis
+                            </label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                                <div>
+                                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">Distance</label>
+                                    <input type="number" id="swimAnalysisDistance" class="tc-input-field" placeholder="1500" min="100" step="50" style="height: 40px;">
+                                    <label for="swimAnalysisUnit" style="display: block; margin-top: 8px; font-size: 13px; font-weight: 600; color: #374151;">Swim Analysis Unit</label>
+                                    <select id="swimAnalysisUnit" class="tc-select-field" title="Select swim analysis unit">
+                                        <option value="meters">Meters</option>
+                                        <option value="yards">Yards</option>
+                                        <option value="kilometers">Kilometers</option>
+                                        <option value="miles">Miles</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">Time</label>
+                                    <input type="text" id="swimAnalysisTime" class="tc-input-field" placeholder="00:25:00" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}" style="height: 40px;">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tc-input-group">
+                            <label class="tc-input-label">
+                                <span class="tc-input-icon">🚴‍♂️</span>
+                                Bike Pace Analysis
+                            </label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                                <div>
+                                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">Distance</label>
+                                    <input type="number" id="bikeAnalysisDistance" class="tc-input-field" placeholder="40" min="5" step="1" style="height: 40px;">
+                                    <label for="bikeAnalysisUnit" style="display: block; margin-top: 8px; font-size: 13px; font-weight: 600; color: #374151;">Bike Analysis Unit</label>
+                                    <select id="bikeAnalysisUnit" class="tc-select-field" title="Select bike analysis unit">
+                                        <option value="km">Kilometers</option>
+                                        <option value="miles">Miles</option>
+                                        <option value="meters">Meters</option>
+                                        <option value="yards">Yards</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">Time</label>
+                                    <input type="text" id="bikeAnalysisTime" class="tc-input-field" placeholder="01:05:00" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}" style="height: 40px;">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tc-input-group">
+                            <label class="tc-input-label">
+                                <span class="tc-input-icon">🏃‍♂️</span>
+                                Run Pace Analysis
+                            </label>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                                <div>
+                                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">Distance</label>
+                                    <input type="number" id="runAnalysisDistance" class="tc-input-field" placeholder="10" min="1" step="0.1" style="height: 40px;">
+                                    <label for="runAnalysisUnit" style="display: block; margin-top: 8px; font-size: 13px; font-weight: 600; color: #374151;">Run Analysis Unit</label>
+                                    <select id="runAnalysisUnit" class="tc-select-field" title="Select run analysis unit">
+                                        <option value="km">Kilometers</option>
+                                        <option value="miles">Miles</option>
+                                        <option value="meters">Meters</option>
+                                        <option value="yards">Yards</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style="display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;">Time</label>
+                                    <input type="text" id="runAnalysisTime" class="tc-input-field" placeholder="00:45:00" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}" style="height: 40px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="tc-calculate-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polygon points="10,8 16,12 10,16 10,8"/>
+                        </svg>
+                        Analyze Paces
+                    </button>
+                </form>
+            </div>
+
+            <div id="resultsContainer" class="tc-results-container"></div>
+        </div>
+    </div>
+
+    <script>
+        // Global share functions
+        function shareOnTwitter(text, url) {
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+            window.open(twitterUrl, '_blank', 'width=600,height=400');
+        }
+
+        function shareOnFacebook(url) {
+            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+            window.open(facebookUrl, '_blank', 'width=600,height=400');
+        }
+
+        function shareOnLinkedIn(text, url) {
+            const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+            window.open(linkedinUrl, '_blank', 'width=600,height=400');
+        }
+
+        function shareOnWhatsApp(text, url) {
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function copyToClipboard(url) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(function() {
+                    showCopyFeedback(true);
+                }).catch(function(err) {
+                    console.warn('Clipboard API failed, using fallback:', err);
+                    fallbackCopyToClipboard(url);
+                });
+            } else {
+                fallbackCopyToClipboard(url);
+            }
+        }
+
+        function fallbackCopyToClipboard(url) {
+            try {
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-9999px';
+                textArea.style.top = '-9999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showCopyFeedback(true);
+            } catch (err) {
+                console.error('Fallback copy failed:', err);
+                showCopyFeedback(false);
+            }
+        }
+
+        function showCopyFeedback(success) {
+            const btn = document.getElementById('copyLinkBtn');
+            if (!btn) return;
+
+            const originalText = btn.innerHTML;
+            if (success) {
+                btn.innerHTML = '✅ Copied!';
+                btn.classList.add('copied');
+                setTimeout(function() {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            } else {
+                btn.innerHTML = '❌ Failed';
+                btn.classList.add('failed');
+                setTimeout(function() {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('failed');
+                }, 2000);
+            }
+        }
+
+        (function() {
+            const result = document.getElementById('resultsContainer');
+
+            // Tab functionality
+            const tabButtons = document.querySelectorAll('.tc-tab-button');
+            const tabContents = document.querySelectorAll('.tc-tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabName = button.getAttribute('data-tab');
+
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    button.classList.add('active');
+                    document.getElementById(`${tabName}-tab`).classList.add('active');
+
+                    result.classList.remove('show');
+                });
+            });
+
+            // Initialize default values on page load
+            initializeDefaultValues();
+
+            // Form handlers
+            document.getElementById('raceTimeForm').addEventListener('submit', handleRaceTimeSubmit);
+            document.getElementById('paceAnalysisForm').addEventListener('submit', handlePaceAnalysisSubmit);
+
+            // Race distance selection handler
+            document.getElementById('raceDistanceType').addEventListener('change', function() {
+                const customInputs = document.getElementById('customDistanceInputs');
+                if (this.value === 'custom') {
+                    customInputs.style.display = 'block';
+                } else {
+                    customInputs.style.display = 'none';
+                    updatePresetDistances(this.value);
+                }
+            });
+
+            function initializeDefaultValues() {
+                // Set default Olympic distances on page load
+                const defaultDistances = {
+                    swim: 1500,
+                    bike: 40,
+                    run: 10
+                };
+
+                document.getElementById('swimDistance').value = defaultDistances.swim;
+                document.getElementById('bikeDistance').value = defaultDistances.bike;
+                document.getElementById('runDistance').value = defaultDistances.run;
+
+                // Set default units
+                document.getElementById('swimDistanceUnit').value = 'meters';
+                document.getElementById('bikeDistanceUnit').value = 'km';
+                document.getElementById('runDistanceUnit').value = 'km';
+
+                // Set default transition times
+                document.getElementById('transition1').value = '00:02:30';
+                document.getElementById('transition2').value = '00:01:30';
+            }
+
+            function updatePresetDistances(distanceType) {
+                const distances = {
+                    super_sprint: { swim: 400, bike: 10, run: 2.5 },
+                    sprint: { swim: 750, bike: 20, run: 5 },
+                    olympic: { swim: 1500, bike: 40, run: 10 },
+                    long_course: { swim: 2000, bike: 50, run: 12 },
+                    half_ironman: { swim: 1900, bike: 90, run: 21.1 },
+                    ironman: { swim: 3800, bike: 180, run: 42.2 },
+                    double_ironman: { swim: 7600, bike: 360, run: 84.4 }
+                };
+
+                if (distances[distanceType]) {
+                    document.getElementById('swimDistance').value = distances[distanceType].swim;
+                    document.getElementById('bikeDistance').value = distances[distanceType].bike;
+                    document.getElementById('runDistance').value = distances[distanceType].run;
+
+                    // Update units to kilometers for consistency
+                    document.getElementById('swimDistanceUnit').value = 'meters';
+                    document.getElementById('bikeDistanceUnit').value = 'km';
+                    document.getElementById('runDistanceUnit').value = 'km';
+                }
+            }
+
+            function handleRaceTimeSubmit(e) {
+                e.preventDefault();
+
+                const swimTimeStr = document.getElementById('swimTime').value;
+                const bikeTimeStr = document.getElementById('bikeTime').value;
+                const runTimeStr = document.getElementById('runTime').value;
+                const t1Str = document.getElementById('transition1').value || '00:02:30';
+                const t2Str = document.getElementById('transition2').value || '00:01:30';
+
+                if (!swimTimeStr || !bikeTimeStr || !runTimeStr) {
+                    alert('Please fill in all discipline times');
+                    return;
+                }
+
+                let swimDistance, bikeDistance, runDistance;
+
+                // Handle custom distances
+                if (document.getElementById('raceDistanceType').value === 'custom') {
+                    const customSwim = parseFloat(document.getElementById('customSwim').value);
+                    const customBike = parseFloat(document.getElementById('customBike').value);
+                    const customRun = parseFloat(document.getElementById('customRun').value);
+
+                    if (!customSwim || !customBike || !customRun) {
+                        alert('Please fill in all custom distances');
+                        return;
+                    }
+
+                    swimDistance = customSwim;
+                    bikeDistance = customBike;
+                    runDistance = customRun;
+                } else {
+                    swimDistance = parseFloat(document.getElementById('swimDistance').value);
+                    bikeDistance = parseFloat(document.getElementById('bikeDistance').value);
+                    runDistance = parseFloat(document.getElementById('runDistance').value);
+                }
+
+                const swimTime = parseTimeString(swimTimeStr);
+                const bikeTime = parseTimeString(bikeTimeStr);
+                const runTime = parseTimeString(runTimeStr);
+                const t1Time = parseTimeString(t1Str);
+                const t2Time = parseTimeString(t2Str);
+
+                const totalTime = swimTime + bikeTime + runTime + t1Time + t2Time;
+                const results = calculateTriathlonPerformance(swimTime, bikeTime, runTime, totalTime, swimDistance, bikeDistance, runDistance);
+
+                displayRaceTimeResults(results, swimTime, bikeTime, runTime, t1Time, t2Time, totalTime);
+            }
+
+            function handlePaceAnalysisSubmit(e) {
+                e.preventDefault();
+
+                const swimTimeStr = document.getElementById('swimAnalysisTime').value;
+                const bikeTimeStr = document.getElementById('bikeAnalysisTime').value;
+                const runTimeStr = document.getElementById('runAnalysisTime').value;
+
+                if (!swimTimeStr || !bikeTimeStr || !runTimeStr) {
+                    alert('Please fill in all discipline times');
+                    return;
+                }
+
+                const swimTime = parseTimeString(swimTimeStr);
+                const bikeTime = parseTimeString(bikeTimeStr);
+                const runTime = parseTimeString(runTimeStr);
+
+                const analysis = analyzeTriathlonPaces(swimTime, bikeTime, runTime);
+                displayPaceAnalysisResults(analysis);
+            }
+
+            // Utility functions
+            function parseTimeString(timeStr) {
+                const parts = timeStr.split(':').map(Number);
+                if (parts.length === 3) {
+                    return parts[0] * 3600 + parts[1] * 60 + parts[2];
+                } else if (parts.length === 2) {
+                    return parts[0] * 60 + parts[1];
+                }
+                return 0;
+            }
+
+            function formatTime(seconds) {
+                const hours = Math.floor(seconds / 3600);
+                const mins = Math.floor((seconds % 3600) / 60);
+                const secs = Math.floor(seconds % 60);
+
+                if (hours > 0) {
+                    return `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                } else {
+                    return `${mins}:${secs.toString().padStart(2, '0')}`;
+                }
+            }
+
+            function calculateTriathlonPerformance(swimTime, bikeTime, runTime, totalTime, swimDistance, bikeDistance, runDistance) {
+                // Convert distances to standard units for calculations
+                const swimDistanceKm = convertDistance(swimDistance, document.getElementById('swimDistanceUnit').value);
+                const bikeDistanceKm = convertDistance(bikeDistance, document.getElementById('bikeDistanceUnit').value);
+                const runDistanceKm = convertDistance(runDistance, document.getElementById('runDistanceUnit').value);
+
+                const swimPace = swimTime / swimDistanceKm; // seconds per km
+                const bikeSpeed = bikeDistanceKm / (bikeTime / 3600); // km/h
+                const runPace = runTime / runDistanceKm; // seconds per km
+
+                return {
+                    totalTime: totalTime,
+                    swimTime: swimTime,
+                    bikeTime: bikeTime,
+                    runTime: runTime,
+                    swimPace: swimPace,
+                    bikeSpeed: bikeSpeed,
+                    runPace: runPace,
+                    swimDistance: swimDistance,
+                    bikeDistance: bikeDistance,
+                    runDistance: runDistance
+                };
+            }
+
+            function convertDistance(distance, unit) {
+                switch(unit) {
+                    case 'miles': return distance * 1.60934;
+                    case 'meters': return distance / 1000;
+                    case 'yards': return distance * 0.0009144;
+                    case 'kilometers': return distance;
+                    default: return distance; // km
+                }
+            }
+
+            function getRaceTypeName() {
+                const raceType = document.getElementById('raceDistanceType').value;
+                const raceTypeNames = {
+                    super_sprint: 'Super Sprint',
+                    sprint: 'Sprint',
+                    olympic: 'Olympic',
+                    long_course: 'Long Course',
+                    half_ironman: 'Half Ironman',
+                    ironman: 'Ironman',
+                    double_ironman: 'Double Ironman',
+                    custom: 'Custom'
+                };
+                return raceTypeNames[raceType] || 'Olympic';
+            }
+
+            function getUnitName(discipline) {
+                const unitMap = {
+                    swim: { meters: 'Meters', yards: 'Yards', kilometers: 'Kilometers', miles: 'Miles' },
+                    bike: { km: 'Kilometers', miles: 'Miles', meters: 'Meters', yards: 'Yards' },
+                    run: { km: 'Kilometers', miles: 'Miles', meters: 'Meters', yards: 'Yards' }
+                };
+
+                const elementId = `${discipline}DistanceUnit`;
+                const element = document.getElementById(elementId);
+                if (element) {
+                    const value = element.value;
+                    return unitMap[discipline][value] || value;
+                }
+                return 'km';
+            }
+
+            function generateShareSection(results, context) {
+                const shareText = `My triathlon prediction: ${formatTime(results.totalTime)} total time! 🏊‍♂️🚴‍♂️🏃‍♂️ Check it out:`;
+                const currentUrl = window.location.href;
+
+                return `
+                    <div class="tc-share-section">
+                        <div class="tc-share-title">📤 Share Your Results</div>
+                        <div class="tc-share-subtitle">Share your triathlon performance with friends and fellow athletes!</div>
+                        <div class="tc-share-buttons">
+                            <button class="tc-share-btn tc-share-twitter" onclick="shareOnTwitter('${shareText}', '${currentUrl}')" title="Share on Twitter">
+                                <span>🐦</span>
+                                <span>Twitter</span>
+                            </button>
+                            <button class="tc-share-btn tc-share-facebook" onclick="shareOnFacebook('${currentUrl}')" title="Share on Facebook">
+                                <span>📘</span>
+                                <span>Facebook</span>
+                            </button>
+                            <button class="tc-share-btn tc-share-linkedin" onclick="shareOnLinkedIn('${shareText}', '${currentUrl}')" title="Share on LinkedIn">
+                                <span>💼</span>
+                                <span>LinkedIn</span>
+                            </button>
+                            <button class="tc-share-btn tc-share-whatsapp" onclick="shareOnWhatsApp('${shareText}', '${currentUrl}')" title="Share on WhatsApp">
+                                <span>💬</span>
+                                <span>WhatsApp</span>
+                            </button>
+                            <button class="tc-share-btn tc-share-copy" id="copyLinkBtn" onclick="copyToClipboard('${currentUrl}')" title="Copy link to clipboard">
+                                <span>📋</span>
+                                <span>Copy Link</span>
+                            </button>
+                        </div>
+                        <div style="font-size: 12px; color: #94a3b8; margin-top: 16px; text-align: center;">
+                            Your triathlon results inspire others on their multisport journey! 🏊‍♂️🚴‍♂️🏃‍♂️
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Display functions
+            function displayRaceTimeResults(results, swimTime, bikeTime, runTime, t1Time, t2Time, totalTime) {
+                const resultHTML = `
+                    <div class="tc-results-header">
+                        <div class="tc-results-title">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            Triathlon Race Time Results
+                        </div>
+                    </div>
+
+                    <div class="tc-main-results">
+                        <div class="tc-result-item">
+                            <span class="tc-result-number">${formatTime(swimTime)}</span>
+                            <div class="tc-result-label">SWIM TIME</div>
+                        </div>
+                        <div class="tc-result-item">
+                            <span class="tc-result-number">${formatTime(bikeTime)}</span>
+                            <div class="tc-result-label">BIKE TIME</div>
+                        </div>
+                        <div class="tc-result-item">
+                            <span class="tc-result-number">${formatTime(runTime)}</span>
+                            <div class="tc-result-label">RUN TIME</div>
+                        </div>
+                        <div class="tc-result-item">
+                            <span class="tc-result-number">${formatTime(t1Time + t2Time)}</span>
+                            <div class="tc-result-label">TRANSITIONS</div>
+                        </div>
+                        <div class="tc-result-item">
+                            <span class="tc-result-number">${formatTime(totalTime)}</span>
+                            <div class="tc-result-label">TOTAL TIME</div>
+                        </div>
+                    </div>
+
+                    <div class="tc-details-section">
+                        <div class="tc-detail-row">
+                            <span class="tc-detail-label">Race Type</span>
+                            <span class="tc-detail-value">${getRaceTypeName()}</span>
+                        </div>
+                        <div class="tc-detail-row">
+                            <span class="tc-detail-label">Swim Distance</span>
+                            <span class="tc-detail-value">${results.swimDistance} ${getUnitName('swim')}</span>
+                        </div>
+                        <div class="tc-detail-row">
+                            <span class="tc-detail-label">Bike Distance</span>
+                            <span class="tc-detail-value">${results.bikeDistance} ${getUnitName('bike')}</span>
+                        </div>
+                        <div class="tc-detail-row">
+                            <span class="tc-detail-label">Run Distance</span>
+                            <span class="tc-detail-value">${results.runDistance} ${getUnitName('run')}</span>
+                        </div>
+                        <div class="tc-detail-row">
+                            <span class="tc-detail-label">Transition Times</span>
+                            <span class="tc-detail-value">T1: ${formatTime(t1Time)} | T2: ${formatTime(t2Time)}</span>
+                        </div>
+                    </div>
+
+                    <div class="tc-info-box">
+                        <div class="tc-info-title">🏊‍♂️🚴‍♂️🏃‍♂️ Triathlon Performance Analysis</div>
+                        <div class="tc-info-text">
+                            <strong>Your total race time is ${formatTime(totalTime)}</strong> for a ${getRaceTypeName()} triathlon.
+                            This includes ${formatTime(swimTime)} for swimming, ${formatTime(bikeTime)} for biking, ${formatTime(runTime)} for running,
+                            and ${formatTime(t1Time + t2Time)} for transitions. Adjust your transition times based on your race experience and conditions.
+                        </div>
+                    </div>
+
+                    ${generateShareSection(results, 'triathlon')}
+                `;
+
+                result.innerHTML = resultHTML;
+                result.classList.add('show');
+                result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            function displayPaceAnalysisResults(analysis) {
+                const resultHTML = `
+                    <div class="tc-results-header">
+                        <div class="tc-results-title">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polygon points="10,8 16,12 10,16 10,8"/>
+                            </svg>
+                            Triathlon Pace Analysis
+                        </div>
+                    </div>
+
+                    <div class="tc-main-results">
+                        <div class="tc-result-item">
+                            <span class="tc-result-number">${analysis.swim.pace}</span>
+                            <div class="tc-result-label">SWIM PACE</div>
+                        </div>
+                        <div class="tc-result-item">
+                            <span class="tc-result-number">${analysis.bike.speed} km/h</span>
+                            <div class="tc-result-label">BIKE SPEED</div>
+                        </div>
+                        <div class="tc-result-item">
+                            <span class="tc-result-number">${analysis.run.pace}</span>
+                            <div class="tc-result-label">RUN PACE</div>
+                        </div>
+                    </div>
+
+                    <div class="tc-details-section">
+                        <div class="tc-detail-row">
+                            <span class="tc-detail-label">Swim Distance</span>
+                            <span class="tc-detail-value">${analysis.swim.distance} ${analysis.swim.unit}</span>
+                        </div>
+                        <div class="tc-detail-row">
+                            <span class="tc-detail-label">Bike Distance</span>
+                            <span class="tc-detail-value">${analysis.bike.distance} ${analysis.bike.unit}</span>
+                        </div>
+                        <div class="tc-detail-row">
+                            <span class="tc-detail-label">Run Distance</span>
+                            <span class="tc-detail-value">${analysis.run.distance} ${analysis.run.unit}</span>
+                        </div>
+                    </div>
+
+                    ${generateShareSection(analysis, 'pace analysis')}
+                `;
+
+                result.innerHTML = resultHTML;
+                result.classList.add('show');
+                result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // Helper functions for calculations
+            function analyzeTriathlonPaces(swimTime, bikeTime, runTime) {
+                // Get distances from form inputs
+                const swimDistance = parseFloat(document.getElementById('swimAnalysisDistance').value) || 1.5;
+                const bikeDistance = parseFloat(document.getElementById('bikeAnalysisDistance').value) || 40;
+                const runDistance = parseFloat(document.getElementById('runAnalysisDistance').value) || 10;
+
+                // Convert distances to km for consistent calculations
+                const swimDistanceKm = convertDistance(swimDistance, document.getElementById('swimAnalysisUnit').value);
+                const bikeDistanceKm = convertDistance(bikeDistance, document.getElementById('bikeAnalysisUnit').value);
+                const runDistanceKm = convertDistance(runDistance, document.getElementById('runAnalysisUnit').value);
+
+                const swimPace = swimTime / swimDistanceKm; // seconds per km
+                const bikeSpeed = bikeDistanceKm / (bikeTime / 3600); // km/h
+                const runPace = runTime / runDistanceKm; // seconds per km
+
+                return {
+                    swim: {
+                        pace: formatTime(swimPace),
+                        distance: swimDistance,
+                        unit: document.getElementById('swimAnalysisUnit').value
+                    },
+                    bike: {
+                        speed: bikeSpeed.toFixed(1),
+                        distance: bikeDistance,
+                        unit: document.getElementById('bikeAnalysisUnit').value
+                    },
+                    run: {
+                        pace: formatTime(runPace),
+                        distance: runDistance,
+                        unit: document.getElementById('runAnalysisUnit').value
+                    }
+                };
+            }
+        })();
+    </script>
+
+    <!-- SEO Content Sections -->
+    <div class="tc-calculator-wrapper">
+        <div class="tc-main-container" style="margin-top: 30px;">
+            <section class="tc-seo-section">
+                <h2 class="tc-section-heading">Triathlon Race Time & Performance</h2>
+                <div class="tc-content-grid">
+                    <div class="tc-content-card">
+                        <h3></h3>
+                        <p>
+                            Calculate your complete triathlon race time by combining individual discipline performances.
+                            This calculator accounts for swim, bike, and run times plus essential transition periods.
+                            Perfect for planning Olympic, Sprint, Half Ironman, and Ironman distance triathlons.
+                        </p>
+
+                        <h4>Standard Triathlon Distances</h4>
+                        <table class="tc-info-table">
+                            <thead>
+                                <tr>
+                                    <th>Distance</th>
+                                    <th>Swim</th>
+                                    <th>Bike</th>
+                                    <th>Run</th>
+                                    <th>Typical Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Super Sprint</strong></td>
+                                    <td>400m</td>
+                                    <td>10km</td>
+                                    <td>2.5km</td>
+                                    <td>45-75 min</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Sprint</strong></td>
+                                    <td>750m</td>
+                                    <td>20km</td>
+                                    <td>5km</td>
+                                    <td>1-1.5 hours</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Olympic</strong></td>
+                                    <td>1500m</td>
+                                    <td>40km</td>
+                                    <td>10km</td>
+                                    <td>2-3 hours</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Half Ironman</strong></td>
+                                    <td>1900m</td>
+                                    <td>90km</td>
+                                    <td>21.1km</td>
+                                    <td>4-6 hours</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Ironman</strong></td>
+                                    <td>3800m</td>
+                                    <td>180km</td>
+                                    <td>42.2km</td>
+                                    <td>8-17 hours</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tc-content-grid">
+                    <div class="tc-content-card">
+                        <h3>Discipline-Specific Performance Factors</h3>
+
+                        <h4>Swimming Performance</h4>
+                        <ul>
+                            <li><strong>Distance Units:</strong> Meters, yards, kilometers, miles</li>
+                            <li><strong>Stroke Types:</strong> Freestyle, breaststroke, backstroke, butterfly</li>
+                            <li><strong>Environmental:</strong> Pool vs open water conditions</li>
+                            <li><strong>Equipment:</strong> Wetsuit benefits (5-8% speed improvement)</li>
+                        </ul>
+
+                        <h4>Cycling Performance</h4>
+                        <ul>
+                            <li><strong>Bike Types:</strong> Road, time trial, mountain, hybrid</li>
+                            <li><strong>Terrain Impact:</strong> Flat, rolling hills, hilly, mountainous</li>
+                            <li><strong>Speed Units:</strong> km/h, mph, m/s</li>
+                            <li><strong>Distance Units:</strong> Kilometers, miles, meters, yards</li>
+                        </ul>
+
+                        <h4>Running Performance</h4>
+                        <ul>
+                            <li><strong>Course Types:</strong> Flat, rolling hills, hilly terrain</li>
+                            <li><strong>Weather Factors:</strong> Temperature and wind conditions</li>
+                            <li><strong>Fatigue Impact:</strong> Performance decrement from prior disciplines</li>
+                            <li><strong>Pace Units:</strong> Minutes per km, minutes per mile</li>
+                        </ul>
+
+                        <h4>Transition Times</h4>
+                        <ul>
+                            <li><strong>T1 (Swim to Bike):</strong> 1-3 minutes typical range</li>
+                            <li><strong>T2 (Bike to Run):</strong> 30 seconds - 2 minutes typical range</li>
+                            <li><strong>Factors:</strong> Experience level, equipment setup, race conditions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tc-content-grid">
+                    <div class="tc-content-card">
+                        <h3>Calculation Methods</h3>
+
+                        <h4>Total Race Time Formula</h4>
+                        <div class="tc-formula-box">
+                            <strong>Total Time = Swim Time + T1 + Bike Time + T2 + Run Time</strong>
+                        </div>
+
+                        <h4>Performance Analysis</h4>
+                        <ul>
+                            <li><strong>Swim Pace:</strong> Swim Time ÷ Swim Distance (seconds per km)</li>
+                            <li><strong>Bike Speed:</strong> Bike Distance ÷ Bike Time (km per hour)</li>
+                            <li><strong>Run Pace:</strong> Run Time ÷ Run Distance (seconds per km)</li>
+                        </ul>
+
+                        <h4>Unit Conversions</h4>
+                        <ul>
+                            <li><strong>Distance:</strong> 1 mile = 1.60934 km | 1 km = 1000 m</li>
+                            <li><strong>Speed:</strong> 1 km/h = 0.62137 mph | 1 m/s = 3.6 km/h</li>
+                            <li><strong>Time:</strong> 1 hour = 3600 seconds | 1 minute = 60 seconds</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tc-seo-section">
+                <h2 class="tc-section-heading">Triathlon Training Applications</h2>
+                <div class="tc-single-row">
+                    <div class="tc-application-card">
+                        <h3>Elite Competition Strategy</h3>
+                        <ul>
+                            <li><strong>Olympic Distance:</strong> Maintain 90-95% of standalone swim pace</li>
+                            <li><strong>Bike Performance:</strong> Target 85-90% of standalone power output</li>
+                            <li><strong>Run Strategy:</strong> Execute 88-92% of standalone run pace</li>
+                            <li><strong>Ironman Pacing:</strong> Conservative approach with 80-85% of standalone paces</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tc-single-row">
+                    <div class="tc-application-card">
+                        <h3>Age Group Performance</h3>
+                        <ul>
+                            <li><strong>Swimming:</strong> Least age-related decline (0.5% per year after age 35)</li>
+                            <li><strong>Cycling:</strong> Intermediate decline (0.8% per year)</li>
+                            <li><strong>Running:</strong> Greatest decline (1.2% per year)</li>
+                            <li><strong>Strategy:</strong> Age-graded performance analysis for realistic goals</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tc-single-row">
+                    <div class="tc-application-card">
+                        <h3>Training Distribution</h3>
+                        <ul>
+                            <li><strong>Recreational:</strong> 60% cycling, 25% running, 15% swimming</li>
+                            <li><strong>Elite:</strong> 70% cycling focus due to performance contribution</li>
+                            <li><strong>Periodization:</strong> Discipline-specific adaptation management</li>
+                            <li><strong>Fatigue Control:</strong> Balanced load across all three disciplines</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tc-seo-section">
+                <h2 class="tc-section-heading">Scientific Research Foundation</h2>
+
+                <div class="tc-research-container">
+                    <div class="tc-research-card">
+                        <h4>Triathlon Pacing Research</h4>
+                        <p>
+                            <strong>Study:</strong> <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4172046/" target="_blank" rel="dofollow noopener">Open Access Journal of Sports Medicine</a><br>
+                            <strong>Findings:</strong> Optimal triathlon performance requires different pacing strategies for each discipline.<br>
+                            <strong>Key Result:</strong> Cycling shows most consistent pacing, running exhibits greatest variability due to fatigue.
+                        </p>
+                    </div>
+                    <div class="tc-research-card">
+                        <h4>Open Water Swimming Performance</h4>
+                        <p>
+                            <strong>Study:</strong> <a href="https://sportsmedicine-open.springeropen.com/articles/10.1186/s40798-025-00828-7" target="_blank" rel="dofollow noopener">Sports Medicine Open</a><br>
+                            <strong>Findings:</strong> Environmental factors significantly impact swim performance.<br>
+                            <strong>Key Result:</strong> Wetsuit use provides 5-8% speed improvement in water temperatures below 25°C.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tc-seo-section">
+                <h2 class="tc-section-heading">Related Training Resources</h2>
+
+                <div class="tc-tools-grid">
+                    <div class="tc-tool-item">
+                        <h4>VO2 Max Calculator</h4>
+                        <p>Assess cardiovascular fitness and aerobic capacity for triathlon training.</p>
+                        <a href="https://fitliferegime.com/vo2-max-calculator/" target="_blank" rel="dofollow noopener">Calculate VO2 Max →</a>
+                    </div>
+
+                    <div class="tc-tool-item">
+                        <h4>Training Volume Calculator</h4>
+                        <p>Optimize training load distribution across swim, bike, and run disciplines.</p>
+                        <a href="https://fitliferegime.com/training-volume-calculator/" target="_blank" rel="dofollow noopener">Calculate Volume →</a>
+                    </div>
+
+                    <div class="tc-tool-item">
+                        <h4>Recovery Time Calculator</h4>
+                        <p>Plan recovery periods between intense triathlon training sessions.</p>
+                        <a href="https://fitliferegime.com/recovery-time-calculator/" target="_blank" rel="dofollow noopener">Calculate Recovery →</a>
+                    </div>
+
+                    <div class="tc-tool-item">
+                        <h4>Workout Planner</h4>
+                        <p>Structure triathlon training with balanced swim, bike, and run sessions.</p>
+                        <a href="https://fitliferegime.com/workout-planner/" target="_blank" rel="dofollow noopener">Plan Workouts →</a>
+                    </div>
+                </div>
+            </section>
+
+            <div class="tc-disclaimer">
+                <h3>⚕️ Medical Disclaimer</h3>
+                <p>
+                    This triathlon calculator provides estimates for training purposes and should not replace professional coaching advice.
+                    Individual performance can vary significantly due to training, nutrition, equipment, and environmental factors.
+                    Always consult with certified coaches and medical professionals before starting or modifying your triathlon training program.
+                    The calculations are for educational purposes and general guidance only.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* SEO Content Styles */
+        .tc-seo-section {
+            margin: 25px 0 !important;
+            padding: 25px !important;
+            background: var(--card-bg) !important;
+            border-radius: 16px !important;
+            border: 1px solid var(--border-color) !important;
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.08) !important;
+        }
+
+        .tc-section-heading {
+            font-size: 28px !important;
+            font-weight: 700 !important;
+            color: var(--text-primary) !important;
+            margin-bottom: 20px !important;
+            text-align: center !important;
+            padding: 20px !important;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue)) !important;
+            color: white !important;
+            border-radius: 12px !important;
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2) !important;
+        }
+
+        .tc-content-grid {
+            display: grid !important;
+            grid-template-columns: 1fr !important;
+            gap: 20px !important;
+            margin-top: 20px !important;
+        }
+
+        .tc-single-row {
+            display: grid !important;
+            grid-template-columns: 1fr !important;
+            gap: 20px !important;
+            margin-top: 20px !important;
+        }
+
+        .tc-content-card {
+            background: linear-gradient(145deg, #F8FAFC, var(--card-bg)) !important;
+            padding: 25px !important;
+            border-radius: 12px !important;
+            border: 2px solid var(--border-color) !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .tc-content-card:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 24px rgba(30, 64, 175, 0.12) !important;
+            border-color: var(--accent-blue) !important;
+        }
+
+        .tc-content-card h3 {
+            color: var(--primary-blue) !important;
+            font-size: 20px !important;
+            font-weight: 700 !important;
+            margin-bottom: 16px !important;
+            padding-bottom: 8px !important;
+            border-bottom: 2px solid var(--light-blue) !important;
+        }
+
+        .tc-content-card p {
+            color: var(--text-secondary) !important;
+            line-height: 1.7 !important;
+            margin: 0 !important;
+            font-size: 16px !important;
+        }
+
+        .tc-content-card a {
+            color: var(--primary-blue) !important;
+            text-decoration: none !important;
+            font-weight: 600 !important;
+        }
+
+        .tc-content-card a:hover {
+            text-decoration: underline !important;
+        }
+
+        /* Application Cards */
+        .tc-application-card {
+            background: var(--card-bg) !important;
+            padding: 24px !important;
+            border-radius: 12px !important;
+            border: 1px solid var(--border-color) !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .tc-application-card:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .tc-application-card h3 {
+            color: var(--primary-blue) !important;
+            font-size: 20px !important;
+            font-weight: 700 !important;
+            margin-bottom: 16px !important;
+            padding-bottom: 8px !important;
+            border-bottom: 2px solid var(--light-blue) !important;
+        }
+
+        .tc-application-card p {
+            color: var(--text-secondary) !important;
+            line-height: 1.8 !important;
+            margin: 0 !important;
+            font-size: 16px !important;
+        }
+
+        /* Research Styles */
+        .tc-research-container {
+            display: grid !important;
+            gap: 20px !important;
+            margin-top: 20px !important;
+        }
+
+        .tc-research-card {
+            background: linear-gradient(145deg, #F8FAFC, var(--card-bg)) !important;
+            padding: 25px !important;
+            border-radius: 12px !important;
+            border: 2px solid var(--border-color) !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .tc-research-card:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 20px rgba(30, 64, 175, 0.1) !important;
+            border-color: var(--accent-blue) !important;
+        }
+
+        .tc-research-card h4 {
+            color: var(--primary-blue) !important;
+            font-size: 18px !important;
+            font-weight: 700 !important;
+            margin-bottom: 12px !important;
+            padding-bottom: 8px !important;
+            border-bottom: 2px solid var(--light-blue) !important;
+        }
+
+        .tc-research-card p {
+            color: var(--text-secondary) !important;
+            line-height: 1.7 !important;
+            margin: 0 !important;
+            font-size: 16px !important;
+        }
+
+        .tc-research-card a {
+            color: var(--primary-blue) !important;
+            text-decoration: none !important;
+            font-weight: 600 !important;
+        }
+
+        .tc-research-card a:hover {
+            text-decoration: underline !important;
+        }
+
+        /* Table Styles */
+        .tc-info-table {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            margin: 16px 0 !important;
+            background: white !important;
+            border-radius: 8px !important;
+            overflow: hidden !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        .tc-info-table th {
+            background: var(--primary-blue) !important;
+            color: white !important;
+            padding: 12px 8px !important;
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            text-align: left !important;
+        }
+
+        .tc-info-table td {
+            padding: 10px 8px !important;
+            border-bottom: 1px solid #E5E7EB !important;
+            font-size: 13px !important;
+            color: var(--text) !important;
+        }
+
+        .tc-info-table tr:hover {
+            background: var(--bg) !important;
+        }
+
+        .tc-formula-box {
+            background: #1F2937 !important;
+            color: #F9FAFB !important;
+            padding: 12px 16px !important;
+            border-radius: 6px !important;
+            font-family: 'Courier New', monospace !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            margin: 8px 0 !important;
+            border-left: 4px solid var(--primary-blue) !important;
+        }
+
+        .tc-tools-grid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+            gap: 16px !important;
+            margin-top: 16px !important;
+        }
+
+        .tc-tool-item {
+            background: white !important;
+            padding: 20px !important;
+            border-radius: 12px !important;
+            border: 1px solid var(--border-color) !important;
+            transition: all 0.2s ease !important;
+            text-align: center !important;
+        }
+
+        .tc-tool-item:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 24px rgba(30, 64, 175, 0.1) !important;
+            border-color: var(--primary-blue) !important;
+        }
+
+        .tc-tool-item h4 {
+            color: var(--primary-blue) !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            margin-bottom: 8px !important;
+        }
+
+        .tc-tool-item p {
+            color: var(--text-light) !important;
+            font-size: 14px !important;
+            margin-bottom: 12px !important;
+            line-height: 1.4 !important;
+        }
+
+        .tc-tool-item a {
+            color: var(--primary-blue) !important;
+            text-decoration: none !important;
+            font-weight: 600 !important;
+            font-size: 14px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .tc-tool-item a:hover {
+            color: var(--primary-blue) !important;
+            transform: translateX(2px) !important;
+        }
+
+        .tc-disclaimer {
+            margin: 30px 0 !important;
+            padding: 25px !important;
+            background: #FEF3C7 !important;
+            border: 2px solid #D97706 !important;
+            border-radius: 16px !important;
+        }
+
+        .tc-disclaimer h3 {
+            color: #92400E !important;
+            font-size: 20px !important;
+            font-weight: 700 !important;
+            margin-bottom: 12px !important;
+        }
+
+        .tc-disclaimer p {
+            color: #92400E !important;
+            line-height: 1.6 !important;
+            margin: 0 !important;
+            font-size: 15px !important;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tc-section-heading {
+                font-size: 24px !important;
+                padding: 16px !important;
+            }
+
+            .tc-content-card,
+            .tc-research-card {
+                padding: 20px !important;
+            }
+
+            .tc-content-card h3,
+            .tc-research-card h4 {
+                font-size: 18px !important;
+            }
+
+            .tc-content-card p,
+            .tc-research-card p {
+                font-size: 15px !important;
+            }
+
+            .tc-tools-grid {
+                grid-template-columns: 1fr !important;
+                gap: 12px !important;
+            }
+
+            .tc-tool-item {
+                padding: 16px !important;
+            }
+
+            .tc-info-table {
+                font-size: 12px !important;
+            }
+
+            .tc-info-table th,
+            .tc-info-table td {
+                padding: 8px 4px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tc-info-table {
+                font-size: 11px !important;
+            }
+
+            .tc-info-table th,
+            .tc-info-table td {
+                padding: 6px 3px !important;
+            }
+
+            .tc-tool-item {
+                padding: 12px !important;
+            }
+
+            .tc-tool-item h4 {
+                font-size: 14px !important;
+            }
+
+            .tc-tool-item p {
+                font-size: 12px !important;
+            }
+
+            .tc-formula-box {
+                font-size: 12px !important;
+                padding: 8px 12px !important;
+            }
+        }
+    </style>
+</body>
+</html>
